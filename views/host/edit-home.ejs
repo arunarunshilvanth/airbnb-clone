@@ -1,0 +1,94 @@
+<%- include('../partials/head') %>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <%- include('../partials/nav') %>
+
+  <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md max-w-2xl">
+    
+    <h1 class="text-3xl font-bold mb-6 text-center text-gray-800"><%= editing ? "Edite" : "Register" %> Your Home on AirBnB</h1>
+    <p class="text-gray-500 text-center mb-8 -mt-4 text-sm">Fill in the details to reach thousands of guests</p>
+
+    <form 
+  action="/host/<%= editing ? 'edit-home' : 'add-home' %>" 
+  method="POST"
+  enctype="multipart/form-data"
+  class="max-w-md mx-auto space-y-4">
+
+  <input type="hidden" name="id" value="<%= editing ? home._id:'' %>" />
+
+      
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">House Name</label>
+        <input
+          type="text"
+          name="houseName"
+          value="<%= editing ? home.houseName:'' %>"
+          placeholder="Enter your House Name"
+          class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
+          required/>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Price Per Night</label>
+          <div class="relative">
+            <span class="absolute left-3 top-2 text-gray-500">Rs</span>
+            <input
+              type="number"
+              name="price"
+              value="<%= editing ? home.price:'' %>"
+              placeholder="Price Per Night"
+              class="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
+              required/>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Rating</label>
+          <input
+            type="text"
+            name="rating"
+            value="<%= editing ? home.rating:'' %>"
+            placeholder="Rating (1.0 - 5.0)"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
+            required/>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Location</label>
+        <input
+          type="text"
+          name="location"
+           value="<%= editing ? home.location:'' %>"
+          placeholder="Location"
+          class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
+          required/>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Photo URL</label>
+        <input
+          type="file"
+          name="photo"
+          accept="image/jpg, image/jpeg , image/png"
+          class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
+          />
+          <textarea
+  name="description"
+  placeholder="Describe Your Home"
+  class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
+  required><%= editing ? home.descriptionl : '' %></textarea>
+
+      </div>
+
+      <div class="pt-4">
+        <input 
+          type="submit" 
+          value="<%= editing ? "Update Home":"Add Home" %>" 
+          class="w-full bg-red-500 text-white font-bold py-2 rounded-md hover:bg-red-600 transition duration-300 cursor-pointer shadow-md" />
+      </div>
+    </form>
+  </main>
+</body>
+</html>

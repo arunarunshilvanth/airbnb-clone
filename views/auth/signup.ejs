@@ -1,0 +1,165 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="min-h-screen flex items-center justify-center 
+             bg-gradient-to-br from-gray-100 to-gray-200 
+             dark:from-gray-900 dark:to-gray-800 p-4">
+
+  <main class="w-full max-w-md bg-white dark:bg-gray-900 
+               rounded-2xl shadow-2xl p-8">
+
+    <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-white">
+      Create Account
+    </h1>
+    <p class="text-center text-gray-500 dark:text-gray-400 mb-8">
+      Start your journey today
+    </p>
+
+    <form action="/signup" method="POST" class="space-y-6">
+      <!-- <% include('../partials/errors') %> -->
+       <%- include('../partials/errors') %>
+
+
+      <% if (errors.length > 0) { %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+          <ul>
+            <% errors.forEach(error => { %>
+              <li><%= error %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+
+      <!-- First Name -->
+      <div class="relative">
+        <input type="text" name="firstName" required
+          value="<%= oldInput.firstName ? oldInput.firstName : '' %>"
+          class="w-full px-4 py-3 border rounded-lg 
+                 bg-transparent 
+                 focus:ring-2 focus:ring-red-500 
+                 focus:outline-none
+                 text-gray-800 dark:text-white"
+          placeholder="First Name" />
+      </div>
+
+      <!-- Last Name -->
+      <div class="relative">
+        <input type="text" name="lastName" required
+          value="<%= oldInput.lastName ? oldInput.lastName : '' %>"
+          class="w-full px-4 py-3 border rounded-lg 
+                 bg-transparent 
+                 focus:ring-2 focus:ring-red-500 
+                 focus:outline-none
+                 text-gray-800 dark:text-white"
+          placeholder="Last Name" />
+      </div>
+
+      <!-- Email -->
+      <div class="relative">
+        <input type="email" name="email" required
+          value="<%= oldInput.email ? oldInput.email : '' %>"
+          class="w-full px-4 py-3 border rounded-lg 
+                 bg-transparent 
+                 focus:ring-2 focus:ring-red-500 
+                 focus:outline-none
+                 text-gray-800 dark:text-white"
+          placeholder="Email Address" />
+      </div>
+
+      <!-- Password -->
+      <div class="relative">
+        <input id="password" type="password" name="password" required
+          class="w-full px-4 py-3 border rounded-lg pr-12
+                 focus:ring-2 focus:ring-red-500 
+                 focus:outline-none
+                 text-gray-800 dark:text-white"
+          placeholder="Password"
+          onkeyup="checkStrength()" />
+
+        <button type="button"
+          onclick="togglePassword()"
+          class="absolute right-4 top-3 text-gray-500">
+          👁
+        </button>
+      </div>
+
+      <!-- Strength Bar -->
+      <div class="h-2 bg-gray-200 rounded-full">
+        <div id="strengthBar"
+             class="h-full w-0 rounded-full transition-all duration-300">
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="relative">
+        <input type="password" name="confirmPassword" required
+          class="w-full px-4 py-3 border rounded-lg 
+                 focus:ring-2 focus:ring-red-500 
+                 focus:outline-none
+                 text-gray-800 dark:text-white"
+          placeholder="Confirm Password" />
+      </div>
+
+      <!-- User Type -->
+      <div class="flex justify-between text-gray-700 dark:text-gray-300">
+        <label class="flex items-center gap-2">
+          <input type="radio" name="userType" value="guest"
+            <%= oldInput.userType === "guest" ? "checked" : "" %>
+            class="accent-red-500">
+          Guest
+        </label>
+
+        <label class="flex items-center gap-2">
+          <input type="radio" name="userType" value="host"
+            <%= oldInput.userType === "host" ? "checked" : "" %>
+            class="accent-red-500">
+          Host
+        </label>
+      </div>
+
+      <!-- Terms -->
+      <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+        <input type="checkbox" name="terms" required class="accent-red-500">
+        I agree to Terms & Conditions
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+        class="w-full py-3 rounded-lg
+               bg-gradient-to-r from-red-500 to-red-600
+               text-white font-semibold
+               hover:scale-105 transition duration-300">
+        Register
+      </button>
+
+    </form>
+
+  </main>
+
+<script>
+function togglePassword() {
+  const pass = document.getElementById("password");
+  pass.type = pass.type === "password" ? "text" : "password";
+}
+
+function checkStrength() {
+  const strengthBar = document.getElementById("strengthBar");
+  const password = document.getElementById("password").value;
+  let strength = 0;
+
+  if (password.length > 5) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[@$!%*?&]/.test(password)) strength++;
+
+  strengthBar.style.width = (strength * 25) + "%";
+
+  if (strength <= 1) strengthBar.style.backgroundColor = "red";
+  else if (strength == 2) strengthBar.style.backgroundColor = "orange";
+  else if (strength == 3) strengthBar.style.backgroundColor = "yellowgreen";
+  else strengthBar.style.backgroundColor = "green";
+}
+</script>
+
+</body>
+</html>

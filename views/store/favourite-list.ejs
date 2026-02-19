@@ -1,0 +1,133 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <%- include('../partials/nav') %>
+  
+  <main class="container mx-auto px-4 py-12 max-w-6xl">
+
+    <!-- Page Heading -->
+    <div class="mb-16">
+
+ 
+
+  <!-- Main Heading -->
+  <h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
+    Your 
+    <span class="bg-gradient-to-r from-rose-500 to-red-500 
+                 bg-clip-text text-transparent">
+      Favourites
+    </span>
+  </h2>
+
+  <!-- Subtitle -->
+  <p class="mt-5 text-gray-500 text-lg max-w-2xl leading-relaxed">
+    Saved homes you're keeping an eye on.
+  </p>
+
+</div>
+
+
+    <% if (!Array.isArray(favouriteHomes) || favouriteHomes.length === 0) { %>
+
+      <!-- Empty State -->
+      <div class="text-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
+        <p class="text-lg text-gray-500 mb-6 italic">
+          Favourites will appear here
+        </p>
+        <a href="/homes"
+          class="inline-block bg-gradient-to-r from-rose-500 to-red-500 
+                 text-white px-6 py-3 rounded-xl font-medium 
+                 shadow-md hover:shadow-xl transition-all duration-300 
+                 hover:-translate-y-1 active:scale-95">
+          Find homes to save
+        </a>
+      </div>
+
+    <% } else { %>
+
+      <!-- Grid With Proper Spacing -->
+      <div class="grid 
+                  grid-cols-1 
+                  md:grid-cols-2 
+                  lg:grid-cols-3 
+                  gap-14">
+
+        <% favouriteHomes.forEach(home => { %>
+
+          <!-- Card -->
+          <div class="bg-white rounded-3xl shadow-md 
+                      hover:shadow-2xl transition-all duration-500 
+                      border border-gray-100 overflow-hidden group">
+
+            <!-- Image Section -->
+            <div class="relative h-56 overflow-hidden">
+
+              <img 
+                src="/<%= home.photo ? home.photo.replace(/\\/g, '/') : '' %>" 
+                class="w-full h-full object-cover 
+                       transition-transform duration-700 
+                       group-hover:scale-110"
+              >
+
+              <!-- Gradient Overlay -->
+              <div class="absolute inset-0 
+                          bg-gradient-to-t 
+                          from-black/50 via-black/10 to-transparent">
+              </div>
+
+              <!-- Price Badge -->
+              <div class="absolute bottom-4 left-4 
+                          bg-white/90 backdrop-blur-md 
+                          px-4 py-1 rounded-full 
+                          text-sm font-semibold shadow-md">
+                Rs <%= home.price %> / night
+              </div>
+
+            </div>
+
+            <!-- Content Section -->
+            <div class="p-6">
+
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-lg font-semibold text-gray-900">
+                  <%= home.houseName %>
+                </h3>
+
+                <span class="text-sm font-medium text-yellow-500">
+                  ★ <%= home.rating %>
+                </span>
+              </div>
+
+              <p class="text-gray-500 text-sm mb-6">
+                <%= home.location %>
+              </p>
+
+              <!-- Remove Button -->
+              <form action="/favourite/delete/<%= home._id %>" method="POST">
+                <button type="submit"
+                  class="w-full py-3 rounded-xl
+                         bg-gradient-to-r from-rose-500 to-red-500
+                         text-black font-medium
+                         shadow-md
+                         transition-all duration-300
+                         hover:-translate-y-1
+                         hover:shadow-xl
+                         active:scale-95">
+                  Remove from Favourites
+                </button>
+              </form>
+
+            </div>
+
+          </div>
+
+        <% }) %>
+
+      </div>
+
+    <% } %>
+
+  </main>
+</body>
+</html>

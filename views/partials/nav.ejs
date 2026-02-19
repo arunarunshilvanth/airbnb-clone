@@ -1,0 +1,71 @@
+<header class="sticky top-0 z-50 bg-white border-b border-gray-100 py-3">
+  <nav class="container mx-auto px-8 flex justify-between items-center">
+
+    <a href="/" class="flex items-center gap-2">
+      <span class="text-xl font-extrabold text-[#FF385C]">airbnb</span>
+    </a>
+
+    <%
+      const safeUser = typeof user !== "undefined" ? user : null;
+      const safeIsLoggedIn = typeof isLoggedIn !== "undefined" ? isLoggedIn : false;
+      const isActive = (page) => (typeof currentPage !== 'undefined' && currentPage === page);
+    %>
+
+    <div class="flex-1 flex justify-center">
+      <% if (safeIsLoggedIn && safeUser) { %>
+        <% if (safeUser.userType === 'guest') { %>
+          
+          <div class="flex items-center bg-white border border-gray-200 rounded-full px-2 py-1 shadow-sm hover:shadow-md transition-shadow">
+            <a href="/homes"
+               class="<%= isActive('Home') ? 'text-black font-semibold' : 'text-gray-500 hover:text-black' %> px-4 py-2 text-sm transition-colors rounded-full">
+              Homes
+            </a>
+
+            <span class="h-4 border-l border-gray-200 mx-1"></span>
+
+            <a href="/favourite"
+               class="<%= isActive('favourite') ? 'text-black font-semibold' : 'text-gray-500 hover:text-black' %> px-4 py-2 text-sm transition-colors rounded-full">
+              Favourites
+            </a>
+
+            <span class="h-4 border-l border-gray-200 mx-1"></span>
+
+            <a href="/bookings"
+               class="<%= isActive('bookings') ? 'text-black font-semibold' : 'text-gray-500 hover:text-black' %> px-4 py-2 text-sm transition-colors rounded-full">
+              Bookings
+            </a>
+          </div>
+
+        <% } else if (safeUser.userType === 'host') { %>
+          <div class="flex items-center gap-4">
+            <a href="/host/host-home-list" class="text-sm font-semibold text-gray-700 hover:bg-gray-100 px-4 py-3 rounded-full transition-colors">
+              Airbnb your home
+            </a>
+            <a href="/host/add-home" class="bg-[#FF385C] text-black-400 px-5 py-2.5 rounded-full text-sm font-bold shadow-sm hover:brightness-110 transition-all active:scale-95">
+              + Add Home
+            </a>
+          </div>
+        <% } %>
+      <% } %>
+    </div>
+
+    <div class="flex items-center">
+      <% if (safeIsLoggedIn) { %>
+        <form action="/logout" method="POST" class="m-0">
+          <button type="submit" class="text-sm font-medium text-gray-600 hover:text-black
+          to-black hover:bg-gray-100 py-2 px-4 rounded-full transition duration-300">
+            Logout
+          </button>
+        </form>
+      <% } else { %>
+        <div class="flex items-center gap-4">
+          <a href="/signup" class="text-sm font-bold text-gray-600 hover:text-black">SignUp</a>
+          <a href="/login" class="bg-[#FF385C] text-black px-5 py-2.5 rounded-full text-sm font-bold shadow-sm hover:brightness-110 transition-all">
+            Login
+          </a>
+        </div>
+      <% } %>
+    </div>
+
+  </nav>
+</header>

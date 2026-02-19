@@ -1,0 +1,122 @@
+<%- include('../partials/head') %>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <%- include('../partials/nav') %>
+
+  <main class="container mx-auto py-10 px-4 max-w-7xl">
+
+    <!-- Updated Premium Heading -->
+    <div class="mb-12">
+
+      <h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
+        Your Registered 
+        <span class="bg-gradient-to-r from-rose-500 to-red-500 
+                     bg-clip-text text-transparent">
+          Homes
+        </span>
+      </h2>
+
+      <p class="mt-4 text-gray-500 text-lg max-w-2xl leading-relaxed">
+        Manage and monitor all your listed properties in one place.
+      </p>
+
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      
+      <% registeredHomes.forEach(home => { %>
+        
+        <div class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300">
+          
+          <!-- IMAGE SECTION -->
+          <div class="relative h-56 overflow-hidden">
+            
+            <%
+              let imageSrc;
+
+              if (home.photo) {
+                imageSrc = '/' + home.photo.replace(/\\/g, '/');
+              } else {
+                imageSrc = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800';
+              }
+            %>
+
+            <img 
+              src="<%= imageSrc %>" 
+              alt="<%= home.houseName %>"
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+            >
+
+            <!-- PRICE BADGE -->
+            <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg shadow-sm">
+              <span class="font-bold text-gray-900">Rs <%= home.price %></span>
+              <span class="text-xs text-gray-500">/ night</span>
+            </div>
+
+          </div>
+
+          <!-- CONTENT -->
+          <div class="p-5">
+
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-gray-800 truncate">
+                <%= home.houseName %>
+              </h3>
+
+              <div class="flex items-center bg-gray-50 px-2 py-1 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                     viewBox="0 0 24 24" 
+                     fill="currentColor" 
+                     class="w-4 h-4 text-yellow-500 mr-1">
+                  <path fill-rule="evenodd" 
+                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" 
+                        clip-rule="evenodd" />
+                </svg>
+
+                <span class="text-xs font-bold text-gray-700">
+                  <%= home.rating %>
+                </span>
+              </div>
+            </div>
+
+            <p class="text-gray-500 text-sm mb-5 flex items-center">
+              <svg class="w-4 h-4 mr-1" 
+                   fill="none" 
+                   stroke="currentColor" 
+                   viewBox="0 0 24 24">
+                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+
+              <%= home.location %>
+            </p>
+
+            <!-- VIEW DETAILS BUTTON -->
+            <a href="/homes/<%= home._id %>" class="block">
+              <div class="
+                  w-full text-center
+                  bg-gradient-to-r from-rose-500 to-red-500
+                  text-black font-semibold
+                  py-3 rounded-xl
+                  shadow-md
+                  transition-all duration-300
+                  hover:shadow-xl
+                  hover:-translate-y-1
+                  active:scale-95
+                  cursor-pointer
+                ">
+                View Details →
+              </div>
+            </a>
+
+          </div>
+
+        </div>
+
+      <% }) %>
+
+    </div>
+  </main>
+</body>
+</html>
