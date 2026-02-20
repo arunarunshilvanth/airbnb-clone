@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 // --- Core Modules ---
 const path = require("path");
 
@@ -18,8 +20,13 @@ const User = require("./models/user");
 
 // --- Configuration ---
 const app = express();
-const PORT = 3000;
-const DB_PATH = "mongodb://127.0.0.1:27017/airbnb";
+const PORT = process.env.PORT || 3001;
+// const DB_PATH = "mongodb://127.0.0.1:27017/airbnb";
+// const DB_PATH = "mongodb+srv://airbnbUser:Aruna@cluster0.u0kuyta.mongodb.net/airbnb?retryWrites=true&w=majority";
+
+const DB_PATH = process.env.MONGO_URL;
+console.log("Loaded URL:", process.env.MONGO_URL);
+
 
 // --- Session Store Setup ---
 const store = new MongoDBStore({
